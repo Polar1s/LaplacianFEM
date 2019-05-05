@@ -1,4 +1,4 @@
-function showDescriptorHQ(X,T,nid,basis,refScale,n,V,h,w)
+function showDescriptorHQ(X,T,nid,n,V,refScale,h,w)
 % Visualize a function on the mesh (with tessellation)
 % The mesh is represented by
 %   X - Vertex positions
@@ -9,17 +9,17 @@ if h*w+1 > size(V,2)
     return;
 end
 
-% Build mesh for individual triangle area
+% Build refined mesh (the same resolution as n=6 by default)
 nt = size(T,1);
 res = 6;
 [Xf,Tf,nidf] = meshDivide(X,T,res);
-coeff = coordCoeff(res,n,refScale)*basis;
+coeff = coordCoeff(res,n,refScale)*showBasis(n,refScale,0);
 Vf = zeros(size(Xf,1),size(V,2));
 for ti = 1:nt
     Vf(nidf(ti,:),:) = coeff*V(nid(ti,:),:);
 end
 
-% Draw mesh
+% Draw refined mesh
 figure;
 cameratoolbar; cameratoolbar('SetCoordSys','none');
 for ri = 1:h
@@ -27,7 +27,7 @@ for ri = 1:h
         ind = (ri-1)*w+ci;
         subplot(h,w,ind);
         patch('vertices',Xf,'Faces',Tf,'FaceColor','interp','CData',Vf(:,ind+1),'edgecolor','none');
-        % view(0,0);
+        % view(0,0);  % Needed when visualizing sphere meshes
         axis equal;
         axis off;
     end

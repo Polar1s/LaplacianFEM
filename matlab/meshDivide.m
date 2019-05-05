@@ -1,6 +1,13 @@
 function [Xa,Ta,nid] = meshDivide(X,T,n)
 % Mesh subdivision for visualization
 
+if n == 1
+    Xa = X;
+    Ta = T;
+    nid = T;
+    return;
+end
+
 nv = size(X,1);
 nt = size(T,1);
 dof = (n+1)*(n+2)/2;

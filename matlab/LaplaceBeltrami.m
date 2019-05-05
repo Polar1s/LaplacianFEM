@@ -1,18 +1,19 @@
-function [V,d] = LaplaceBeltrami(X,T,nid,basis,refScale,n,nTot,nEig,tableInverse)
+function [V,d,Xa,Ta,nid,M] = LaplaceBeltrami(X,T,n,nEig,refScale,displayBasis,tableInverse)
 % Solver for eigenvalues and eigenfunctions of Discrete Laplacian-Beltrami
 % operator on a given mesh
 
 nt = size(T,1);
-dof = size(basis,1);
-if dof ~= (n+1)*(n+2)/2
-    printf('Error: input mesh has incorrect order');
-    return;
-end
+dof = (n+1)*(n+2)/2;
 
 % Constant matrices
 IT = integralTable(n,refScale,tableInverse);
 H = intProdMatrix(n,IT);
 dCoeff = derivativeCoeff(n);
+basis = showBasis(n,refScale,displayBasis);
+
+% Create subdivided mesh
+[Xa,Ta,nid] = meshDivide(X,T,n);
+nTot = size(Xa,1);
 
 % Mass matrix per element (inner product of basis functions)
 Me = intProd(basis,basis,n,H,tableInverse);
