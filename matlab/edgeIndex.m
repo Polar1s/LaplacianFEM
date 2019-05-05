@@ -28,7 +28,7 @@ end
 E(:) = sortrows(E);
 for i = 1:ne-1
     if isequal(E(i,:),E(i+1,:))
-        printf('Error: duplicate edges');
+        fprintf('Error: duplicate edges\n');
     end
 end
 
@@ -41,7 +41,7 @@ for j = 1:3
         v = max(T(i,j),T(i,k));
         ei = searchEdge(E,u,v);
         if ei == 0
-            printf('Error: edge (%d,%d) not found in list',u,v);
+            fprintf('Error: edge (%d,%d) not found in list\n',u,v);
         else
             Te(i,j) = ei;
         end

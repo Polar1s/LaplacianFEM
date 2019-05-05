@@ -5,7 +5,7 @@ function showDescriptor(X,T,V,h,w)
 %   T - Vertex indices on each triangle
 
 if h*w+1 > size(V,2)
-    printf('Error: number of eigenvectors not sufficient');
+    fprintf('Error: number of eigenvectors not sufficient\n');
     return;
 end
 

@@ -74,7 +74,7 @@ function res = intProd(P,Q,n,H,tableInverse)
 % Both P(x) and Q(x) are nth-order polynomials represented in coefficients
 dof = size(P,1);
 if dof ~= (n+1)*(n+2)/2 || dof ~= size(Q,1)
-    printf('Error: Input polynomial has incorrect order');
+    fprintf('Error: Input polynomial has incorrect order\n');
     res = 0;
 else
     m = size(Q,2);
@@ -114,7 +114,7 @@ dof = size(P,1);
 m = size(P,2);
 Pd = zeros(dof,m,2);
 if dof ~= (n+1)*(n+2)/2
-    printf('Error: Input polynomial has incorrect order');
+    fprintf('Error: Input polynomial has incorrect order\n');
 else
     for i = 1:n
         k = i*(i+1)/2;
