@@ -10,7 +10,7 @@ if h*w+1 > size(V,2)
 end
 
 % Draw augmented mesh
-figure;
+figure('Position',[1000 500 1000 400]);
 cameratoolbar; cameratoolbar('SetCoordSys','none');
 for i = 1:h
     for j = 1:w

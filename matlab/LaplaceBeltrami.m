@@ -43,13 +43,14 @@ for ti = 1:nt
     b = norm(vb,2);
     costh = dot(va,vb)/(a*b);
     sinth = sqrt(1-costh*costh);
-    A = [1/a -costh/(a*sinth);0 1/(b*sinth)];
+    A = [1/a -costh/(a*sinth);0 1/(b*sinth)]*refScale;
+    areaScaled = a*b*sinth/refScale^2;
     
     % Fill matrix entries
     Li((1:dof*dof)+(ti-1)*dof*dof) = nid(ti,repMatT);
     Lj((1:dof*dof)+(ti-1)*dof*dof) = nid(ti,repMat);
-    Lv((1:dof*dof)+(ti-1)*dof*dof) = reshape(sum(Le.*reshape(A*A',[4,1]),1),[dof,dof]);
-    Mv((1:dof*dof)+(ti-1)*dof*dof) = Me*(a*b*sinth/refScale^2);
+    Lv((1:dof*dof)+(ti-1)*dof*dof) = reshape(sum(Le.*reshape(A*A',[4,1]),1),[dof,dof])/areaScaled;
+    Mv((1:dof*dof)+(ti-1)*dof*dof) = Me*areaScaled;
 end
 
 L = sparse(Li,Lj,Lv,nTot,nTot);

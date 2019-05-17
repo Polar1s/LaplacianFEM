@@ -20,7 +20,7 @@ for ti = 1:nt
 end
 
 % Draw refined mesh
-figure;
+figure('Position',[1000 500 1000 400]);
 cameratoolbar; cameratoolbar('SetCoordSys','none');
 for ri = 1:h
     for ci = 1:w

@@ -9,10 +9,10 @@ basis = coordCoeff(n,n,refScale)\eye(dof); % Numerical issues with large n (n~20
 if display
     res = 20;
     Z = coordCoeff(res,n,refScale)*basis;
-    X = triangleDivide([0.5 1;0 0;1 0]*refScale,res);
-    T = zeros(n*n,3);
+    X = triangleDivide([0 1;0 0;1 0]*refScale,res);
+    T = zeros(res*res,3);
     T(1,:) = [1 2 3];
-    for i = 2:n
+    for i = 2:res
         j = i*(i-2)+2;
         k = i*(i+1)/2;
         T(j:2:i*i,:) = [k-i+1:k;k+1:k+i;k+2:k+i+1]';

@@ -4,20 +4,20 @@
 % n <= 10, due to numerical issues.
 
 % Global parameters
-n = 10;                     % Order of finite element
+n = 5;                     % Order of finite element
 displayBasis = 0;           % Show a figure of all basis functions
 tableInverse = 0;           % Store denominators in integral table
 refScale = 1;               % Scale of reference triangle
 meshPath = '../meshes';     % Path to mesh files
-meshName = 'human_coarse_rot.off';  % Name of mesh file
-mode = 'eval';              % Result processing mode ('eval' or 'vis')
+meshName = '166_lite.off';  % Name of mesh file
+mode = 'vis2';              % Result processing mode ('eval' or 'vis')
 
 % Evaluation ('eval') mode parameters
 gtDataPath = '../gtdata';   % Path to ground-truth data folder
-gtReadFile = 1;             % Read ground-truth data from external file
-gtWriteFile = 0;            % Write ground-truth data to external file
+gtReadFile = 0;             % Read ground-truth data from external file
+gtWriteFile = 1;            % Write ground-truth data to external file
 eEig = 100;                 % Number of eigenfunctions
-gtEig = 300;               % Number of ground-truth eigenfunctions
+gtEig = 300;                % Number of ground-truth eigenfunctions
 gtRes = 20;                 % Resolution of ground-truth refined mesh
 
 % Visualization ('vis') mode parameters
@@ -37,7 +37,7 @@ if strcmp(mode,'eval')
     save(resFile,'tc','err');
 
 % Show eigenfunctions in 'vis' mode
-elseif strcmp(mode,'vis')
+elseif strcmp(mode,'vis1')
     nEig = hEig*wEig+1;
     [V,~,Xa,Ta,nid,~] = LaplaceBeltrami(X,T,n,nEig,refScale,displayBasis,tableInverse);
     
@@ -45,6 +45,15 @@ elseif strcmp(mode,'vis')
         showDescriptorHQ(X,T,nid,n,V,refScale,hEig,wEig);
     else
         showDescriptor(Xa,Ta,V,hEig,wEig);
+    end
+elseif strcmp(mode,'vis2')
+    [V,~,Xa,Ta,nid,~] = LaplaceBeltrami(X,T,n,25,refScale,displayBasis,tableInverse);
+    inds = [1 5 8 13 25];
+    
+    if visQuality > 0 && (n == 2 || n == 3)
+        showDescriptorHQ(X,T,nid,n,V(:,inds),refScale,1,4);
+    else
+        showDescriptor(Xa,Ta,V(:,inds),1,4);
     end
 
 % Undefined mode
